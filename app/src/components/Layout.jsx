@@ -20,10 +20,9 @@ export default class Layout extends React.Component {
 		this.cardElement = this.elements.create('card')
 	}
 
-	show() {
-		this.state.isShow = true
-		console.log(this.state.isShow)
-	}
+	// componentDidMount() {
+	// 	this.show()
+	// }
 
 	render() {
 		return (
@@ -31,7 +30,7 @@ export default class Layout extends React.Component {
 				<button onClick={ () => this.setState({ isShow: !this.state.isShow }) }>押してね</button>
 				<KomojuPayment message="テストです" komojuKey={ config.komojuKey }/>
 				{ this.state.isShow && <PayjpPayment payjp={this.payjp} elements={this.elements} cardElement={this.cardElement} payjpKey={ config.payjpKey }/> }
-				<Payment />
+				<Payment payjp={this.payjp} elements={this.elements} cardElement={this.cardElement} payjpKey={ config.payjpKey }/>
 			</div>
 		);
 	}

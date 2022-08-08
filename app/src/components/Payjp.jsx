@@ -15,14 +15,20 @@ export default class PayjpPayment extends React.Component {
 
 
 	handleClick() {
-		// payjp.createToken(cardElement).then((r) => {
-		// 	if (r.error) {
-		// 		// errorMessage = r.error.message
-		// 	} else {
-		// 		token = r.id
-		// 		console.log(r)
-		// 	}
-		// })
+		console.log('onClick')
+		this.payjp.createToken(cardElement).then((res) => {
+			if (res.error) {
+				console.log(r.error.message)
+				return
+			} else {
+				token = res.id
+				console.log('token', token)
+			}
+		})
+	}
+
+	click() {
+		console.log("click test success!")
 	}
 
 	componentDidMount() {
@@ -34,11 +40,6 @@ export default class PayjpPayment extends React.Component {
 		this.cardElement.mount('#v2-demo')
 	}
 
-	componentWillUnmount() {
-		// this.cardElement = null
-		console.log(this.cardElement)
-	}
-
 	render() {
 		return (
 			<div>
@@ -47,8 +48,9 @@ export default class PayjpPayment extends React.Component {
 
 				<form>
 					<div id="v2-demo" class="payjs-outer"></div>
-					<button onClick={ this.handleClick }>トークン作成</button>
 				</form>
+				<button onClick={ this.handleClick }>トークン作成</button>
+				<button onClick={ this.click }>Click Test!!</button>
 			</div>
 		)
 	}

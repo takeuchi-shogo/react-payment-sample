@@ -1,25 +1,24 @@
 
-import React from "react";
+import React, { useState } from "react";
 
 
-export default class KomojuPayment extends React.Component {
+const KomojuPayment = (props) => {
 
-	constructor(props) {
-		super(props)
-		this.payform = document.getElementById('pay-form')
+	const count = 100
 
-		this.handler = Komoju.multipay.configure({
-			key: props.komojuKey,
-			token: function(token) {
-				payForm.komojuToken.value = token.id
-				payForm.submit()
-			}
-		})
-	}
+	const handler = Komoju.multipay.configure({
+		key: props.komojuKey,
+		token: (token) => {
+			let payform = document.getElementById('payform')
+			payform.komojuToken.value = token.id;
+			console.log('token', token.id)
+			payform.submit()
+		}
+	})
 
-	handleClick() {
-		console.log('kkkk')
-		this.handler.open({
+	const handleClick = () => {
+		console.log('kkkk', handler.key, count)
+		handler.open({
 			amount:       1000,
 			endpoint:     "https://komoju.com",
 			locale:       "ja",
@@ -32,24 +31,20 @@ export default class KomojuPayment extends React.Component {
 		})
 	}
 
-	click() {
-		console.log('click!!')
-	}
-
-	render() {
-		return (
-			<div>
+	return (
+		<div>
 				<h1>Komoju!!!</h1>
-				<p>{ this.props.message }</p>
-				<p>{ this.props.komojuKey }</p>
+				<p>{ props.message }</p>
+				<p>{ props.komojuKey }</p>
 
-				<form id="pay-form">
-					<input type="text" name="komojuToken"/>	
+				<form id="payform">
+					<input type="hidden" name="komojuToken"/>	
 				</form>
-				<button id="customButton" onClick={() => this.handleClick() }>今すぐ支払い</button>
+				<button id="customButton" onClick={ handleClick }>今すぐ支払い</button>
 
-				<button onClick={ this.click }>test</button>
+				{/* <button onClick={ this.click }>test</button> */}
 			</div>
-		)
-	}
+	)
 }
+
+export default KomojuPayment
